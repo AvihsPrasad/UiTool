@@ -1,0 +1,157 @@
+<nav class="navbar" style="background-color: #e6a8a8;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <!-- <img src="/docs/5.2/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24" class="d-inline-block align-text-top"> -->
+      Product Update tool
+    </a>
+    <form class="d-flex" role="search" style="padding-right: 10px;cursor: pointer;" title="Logout">
+      <i class="fas fa-power-off" (click)="Logout()"></i>
+    </form>
+  </div>
+</nav>
+<div class="addItem_block">
+  <button class="btn btn-outline-primary btn-sm" type="button" data-bs-toggle="collapse"
+    data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    <i class="fas fa-plus"></i> Add Items
+  </button>
+</div>
+<div id="collapseExample" class="form_block collapse">
+  <div class="card">
+    <div class="card-body">
+      <div class="container" style="padding: 0; margin: 0; max-width: 100%">
+        <div class="row">
+          <div class="col-3">
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Name</label>
+              <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Name"
+                [(ngModel)]="itemDetails.c_name" />
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Item</label>
+              <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Item"
+                [(ngModel)]="itemDetails.item" />
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Total Cost</label>
+              <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Total Cost"
+                [(ngModel)]="itemDetails.cost" />
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Amount Paid</label>
+              <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Amount Paid"
+                [(ngModel)]="itemDetails.balance" />
+            </div>
+          </div>
+          <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-success btn-sm" (click)="saveItem()">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="form_block">
+  <table class="table table-hover">
+    <thead style="background-color: #e6a8a8">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Item</th>
+        <th scope="col">Total Cost</th>
+        <th scope="col">Balance</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of allItems; let i = index">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{ data.c_name}}</td>
+        <td>{{ data.item }}</td>
+        <td>{{ data.cost }}</td>
+        <td>{{ data.balance }}</td>
+        <td><i class="far fa-edit" (click)="edit(true, data)" style="cursor: pointer;"></i></td>
+      </tr>
+      <!-- <tr>
+        <th scope="row">2</th>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>20</td>
+        <td>10</td>
+        <td><i class="far fa-edit"></i></td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Larry the Bird</td>
+        <td>@twitter</td>
+        <td>20</td>
+        <td>10</td>
+        <td><i class="far fa-edit" style="cursor: pointer"></i></td>
+      </tr> -->
+    </tbody>
+  </table>
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+      <!-- <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li> -->
+      <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    </ul>
+  </nav>
+</div>
+
+<div class="modal" id="exampleModalCenter" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-modal="true"
+  role="dialog" [ngClass]="editval ? 'fade show' : 'hide'">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Edit Customer Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeModel(false)"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-6">
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Name</label>
+              <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Name"
+                [(ngModel)]="editItem.c_name" disabled="disabled" />
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Item</label>
+              <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Item"
+                [(ngModel)]="editItem.item" disabled="disabled"/>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Total Cost</label>
+              <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Total Cost"
+                [(ngModel)]="editItem.cost" disabled="disabled"/>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Amount Paid</label>
+              <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Amount Paid"
+                [(ngModel)]="editItem.balance" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="closeModel(false)">Close</button>
+        <button type="button" class="btn btn-primary" (click)="saveEditiedChanges()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop fade" [ngClass]="editval ? 'show' : 'hide'"></div>
